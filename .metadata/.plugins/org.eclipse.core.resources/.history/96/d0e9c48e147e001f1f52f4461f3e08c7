@@ -1,0 +1,8 @@
+package hw.toy.hospital.dto;
+
+public class Doctor {
+
+	private String name;
+	private String department ;
+	
+}

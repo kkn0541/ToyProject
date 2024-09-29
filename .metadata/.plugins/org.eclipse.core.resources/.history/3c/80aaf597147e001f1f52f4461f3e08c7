@@ -1,0 +1,14 @@
+package hw.toy.hospital.dto;
+
+public class Doctor {
+
+	private String name;
+	private String department ;
+	private String birth;
+	
+	public Doctor() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+}

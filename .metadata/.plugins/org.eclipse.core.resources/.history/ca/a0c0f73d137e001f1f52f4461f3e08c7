@@ -1,0 +1,10 @@
+package hw.toy.hospital.dto;
+
+public class Admin {
+
+	private String id;
+	private String pw;
+	private String pw2;
+	private String birth;
+	
+}

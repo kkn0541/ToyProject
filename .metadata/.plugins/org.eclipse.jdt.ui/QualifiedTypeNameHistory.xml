@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.hw3.run.Run"/>
+    <fullyQualifiedTypeName name="com.hw3.model.vo.Product"/>
+    <fullyQualifiedTypeName name="kk.vo.Friend"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="test.vo.Member"/>
+    <fullyQualifiedTypeName name="hw.toy.hospital.dto.Login"/>
+    <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="java.util.Map"/>
+    <fullyQualifiedTypeName name="hw.toy.hospital.dto.Patient"/>
+    <fullyQualifiedTypeName name="java.util.HashMap"/>
+    <fullyQualifiedTypeName name="java.util.HashSet"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.Set"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="hw.toy.hospital.dto.Admin"/>
+    <fullyQualifiedTypeName name="java.util.LinkedHashSet"/>
+</qualifiedTypeNameHistroy>

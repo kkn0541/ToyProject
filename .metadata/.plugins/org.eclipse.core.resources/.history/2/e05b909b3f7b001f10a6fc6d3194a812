@@ -1,0 +1,20 @@
+package com.hw3.run;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.hw3.model.vo.Product;
+
+public class Run {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		Product pro = new Product();
+		List<Product> pro1 = new ArrayList<Product>();
+		
+		pro1.add(1);
+		pro.setPld(11);
+	}
+
+}

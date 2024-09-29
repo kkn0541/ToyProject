@@ -1,0 +1,75 @@
+package hw.toy.hospital.dto;
+
+public class Patient {
+
+	private String name;
+	private String birth;
+	private char gender;
+	private int pNumber;
+	private String department;
+	
+	public Patient() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Patient(String name, String birth, char gnder, int pNumber, String department) {
+		super();
+		this.name = name;
+		this.birth = birth;
+		this.gnder = gnder;
+		this.pNumber = pNumber;
+		this.department = department;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
+
+	public char getGnder() {
+		return gnder;
+	}
+
+	public void setGnder(char gnder) {
+		this.gnder = gnder;
+	}
+
+	public int getpNumber() {
+		return pNumber;
+	}
+
+	public void setpNumber(int pNumber) {
+		this.pNumber = pNumber;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+
+	@Override
+	public String toString() {
+		return "Patient [name=" + name + ", birth=" + birth + ", gnder=" + gnder + ", pNumber=" + pNumber
+				+ ", department=" + department + "]";
+	}
+	
+
+	
+
+
+
+}

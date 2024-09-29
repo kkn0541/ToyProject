@@ -1,0 +1,2 @@
+module toyProect_hospital {
+}

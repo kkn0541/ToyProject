@@ -1,0 +1,5 @@
+package hw.toy.hospital.dto;
+
+public class Login {
+
+}

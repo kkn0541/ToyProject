@@ -1,0 +1,7 @@
+package hw.toy.hospital.run;
+
+public class HospitalRun {
+public static void main(String[] args) {
+	
+}
+}

@@ -1,0 +1,10 @@
+package hw.toy.hospital.dto;
+
+public class Patient {
+
+	private String name;
+	private String birth;
+	private char gnder;
+	privaet int pNumber;
+	private String department;
+}
