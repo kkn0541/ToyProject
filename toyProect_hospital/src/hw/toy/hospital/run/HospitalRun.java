@@ -7,7 +7,8 @@ public static void main(String[] args) {
 	
 	HospitalService hsService = new HospitalService();
 	
-	
+	hsService.departmentList();
+	hsService.patientListByday();
 	hsService.displayMenu();
 }
 }

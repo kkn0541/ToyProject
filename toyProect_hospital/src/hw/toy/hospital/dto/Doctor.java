@@ -3,9 +3,9 @@ package hw.toy.hospital.dto;
 public class Doctor {
 
 	private String name;
-	private String department ;
+	private String department;
 	private String birth;
-	
+
 	public Doctor() {
 		// TODO Auto-generated constructor stub
 	}
@@ -43,10 +43,6 @@ public class Doctor {
 
 	@Override
 	public String toString() {
-		return "Doctor [name=" + name + ", department=" + department + ", birth=" + birth + "]";
+		return "이름 : " + name + "  |  담당과 :" + department + "  |  생년월일 :" + birth;
 	}
-	
-	
-	
-	
 }

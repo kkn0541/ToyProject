@@ -1,9 +1,13 @@
 package hw.toy.hospital.service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -46,12 +50,14 @@ public class HospitalService {
 
 		doctor.add(new Doctor("김내과", "내과", "19611212"));
 		doctor.add(new Doctor("박외과", "외과", "19770204"));
-		doctor.add(new Doctor("김내과", "안과", "19810915"));
+		doctor.add(new Doctor("김안과", "안과", "19810915"));
+		doctor.add(new Doctor("권내과", "내과", "19931116"));
+		doctor.add(new Doctor("최외과", "외과", "19831002"));
 
-		patient.add(new Patient("김길동", "19550102", 'm', 01011112222, "내과"));
-		patient.add(new Patient("마이콜", "19990718", 'm', 01055556666, "안과"));
-		patient.add(new Patient("홍도치", "19710812", 'w', 01033334444, "외과"));
-		patient.add(new Patient("박둘리", "20051006", 'w', 01011112222, "외과"));
+		patient.add(new Patient("김길동", "19550102", 'm', 01011112222, "내과", 20240101));
+		patient.add(new Patient("마이콜", "19990718", 'm', 01055556666, "안과", 20210502));
+		patient.add(new Patient("홍도치", "19710812", 'w', 01033334444, "외과", 20220601));
+		patient.add(new Patient("박둘리", "20051006", 'w', 01011112222, "외과", 20230825));
 
 	}
 
@@ -71,8 +77,9 @@ public class HospitalService {
 	}
 
 	public void displayMenu() {
-
+		System.out.println();
 		System.out.println("===========병원 환자관리 프로그램입니다.==========");
+		System.out.println();
 
 		int menuNum = 0; // 메뉴 선택용 변수
 
@@ -123,27 +130,40 @@ public class HospitalService {
 	public void adminAdd() {
 
 		System.out.println("====관리자 회원가입 페이지 입니다 ====");
+		System.out.println();
 		boolean flag = true;
 
 		System.out.print("아이디:");
 		String id = sc.next();
 
-		while (flag) {
+		for (Admin ad : admin) {
+			if (ad.getId().equals(id)) {
+				System.out.println("이미 존재하는 아이디입니다. 다시 입력하세요 ");
+				adminAdd();
 
-			for (Admin ad : admin) {
-				if (ad.getId().equals(id)) {
-					System.out.println("이미 존재하는 아이디입니다. 다시 입력하세요 ");
-					adminAdd();
-				} else {
-					System.out.println(" @@ 사용 가능한 id 입니다.");
-					flag = false; // 없으니까 비밀번호까지 안넘어감 왜그러지
-				}
-
-				break; // 없으니까 java.util.ConcurrentModificationException 발생 왜 그러지
+				break; // 없으니까 java.util.ConcurrentModificationException 발생
 			}
 		}
 
+		System.out.println(" @@ 사용 가능한 id 입니다.");
+
+//		while (flag) {
+//
+//			for (Admin ad : admin) {
+//				if (ad.getId().equals(id)) {
+//					System.out.println("이미 존재하는 아이디입니다. 다시 입력하세요 ");
+//					adminAdd();
+//				} else {
+//					System.out.println(" @@ 사용 가능한 id 입니다.");
+//					flag = false; // 없으니까 비밀번호까지 안넘어감 왜그러지
+//				}
+//
+//				break; // 없으니까 java.util.ConcurrentModificationException 발생 왜 그러지
+//			}
+//		}
+
 		System.out.print("비밀번호:");
+
 		String pw1 = sc.next();
 
 		System.out.print("비밀번호 확인:");
@@ -166,6 +186,7 @@ public class HospitalService {
 		admin.add(new Admin(id, pw1, pw2, birth));
 
 		System.out.println(admin);
+
 		adminLogin();
 
 	}
@@ -234,6 +255,7 @@ public class HospitalService {
 
 	public void adminMenu() {
 		System.out.println("===========병원 환자관리 프로그램입니다.==========");
+		System.out.println();
 
 		int menuNum = 0; // 메뉴 선택용 변수
 
@@ -259,6 +281,9 @@ public class HospitalService {
 					break;
 				case 3:
 					patientRemove();
+					break;
+				case 4:
+					departmentList();
 					break;
 
 				case 0:
@@ -290,12 +315,37 @@ public class HospitalService {
 			ptNum++;
 			System.out.println(ptl);
 		}
+
 		System.out.println("  총  " + ptNum + "  분이 입원중입니다.");
 		System.out.println();
+
+		System.out.println("입원일순으로 정렬하시겠습니까   y/n");
+
+		char yn = sc.next().toUpperCase().charAt(0);
+		if (yn == 'Y') {
+			patientListByday();
+
+		}
+
+	}
+
+	public void patientListByday() {
+		System.out.println("입원일순으로 정렬");
+
+		List<Patient> sortPt = new ArrayList<Patient>(patient);
+
+		// 입원일 순으로 오름차순 정렬
+		sortPt.sort(Comparator.comparing(Patient::getDay));
+
+		for (Patient sort : sortPt) {
+			System.out.println(sort);
+		}
+
 	}
 
 	public void patientAdd() {
 		// TODO Auto-generated method stub
+		System.out.println();
 		System.out.println("============입원 환자 추가============");
 
 		System.out.print("환자 성명 ");
@@ -305,7 +355,7 @@ public class HospitalService {
 		String birth = sc.next();
 
 		System.out.print("환자 성별 - m / w");
-		char gender = sc.next().charAt(0);
+		char gender = sc.next().toUpperCase().charAt(0);
 
 		System.out.print("환자 연락처");
 		int pNumber = sc.nextInt();
@@ -313,9 +363,12 @@ public class HospitalService {
 		System.out.print("담당 과 - 내과,외과,안과 중 선택하세요");
 		String department = sc.next();
 
+		System.out.println("입원일");
+		int day = sc.nextInt();
+
 		for (Patient ptAdd : patient) {
 
-			patient.add(new Patient(name, birth, gender, pNumber, department));
+			patient.add(new Patient(name, birth, gender, pNumber, department, day));
 			System.out.println(name + "  환자님을 추가하였습니다.");
 
 			patientList();
@@ -330,50 +383,98 @@ public class HospitalService {
 	 * 
 	 */
 	public void patientRemove() {
+		System.out.println();
 		System.out.println("======환자 퇴원 =======");
 
 		System.out.println("환자 이름 입력");
 		String name = sc.next();
 
-		System.out.println("생년월일");
-		String birth = sc.next();
+		System.out.println("입원일 입력");
+		int day = sc.nextInt();
 
-		System.out.println("연락처");
-		int pNumber = sc.nextInt();
+		// ConcurrentModificationException 발생 원인 및 해결 방안
+		// 동시 수정: ArrayList와 같은 컬렉션을 순회하면서 동시에 요소를 제거하려고 할 때 발생하는 대표적인 예외입니다.
 
-		
-		
-		//ConcurrentModificationException 발생 원인 및 해결 방안
-		//동시 수정: ArrayList와 같은 컬렉션을 순회하면서 동시에 요소를 제거하려고 할 때 발생하는 대표적인 예외입니다.
-		
 		// List의 복사본 생성 후 삭제:
 
-		//ArrayList의 경우 ArrayList.subList()를 사용하여 복사본을 생성하고, 복사본에서 삭제 작업을 수행한 후 원본 리스트에 반영할 수 있습니다.
-		
-		
-		List<Patient> tempList = new ArrayList<>(patient);
-		
-		//new ArrayList<>(patient):
-        //new ArrayList<>(): ArrayList의 새로운 인스턴스를 생성합니다.
-        //(patient): 생성된 ArrayList에 patient 리스트의 모든 요소를 복사합니다. 즉, patient 리스트에 있는 모든 Patient 객체를 tempList에도 동일하게 복사하여 초기화합니다.
-		for (Patient ptRmove : tempList) {
+		// ArrayList의 경우 ArrayList.subList()를 사용하여 복사본을 생성하고, 복사본에서 삭제 작업을 수행한 후 원본 리스트에
+		// 반영할 수 있습니다.
 
-			if (ptRmove.getName().equals(name)) {
-				// 조건이 true인 객체의 index값 반환하여 변수 index에 대입
-				int index = patient.indexOf(ptRmove);
-				System.out.println(name + "님을 퇴원처리 하겠습니까?  (y/n");
+		// List<Patient> tempList = new ArrayList<>(patient);
+
+		// new ArrayList<>(patient):
+		// new ArrayList<>(): ArrayList의 새로운 인스턴스를 생성합니다.
+		// (patient): 생성된 ArrayList에 patient 리스트의 모든 요소를 복사합니다. 즉, patient 리스트에 있는 모든
+		// Patient 객체를 tempList에도 동일하게 복사하여 초기화합니다.
+
+		for (Patient ptRmove : patient) {
+			if (ptRmove.getName().equals(name) && ptRmove.getDay() == day) {
+				System.out.println(name + "님을 퇴원처리 하겠습니까?  (y/n)");
 				char ch = sc.next().toUpperCase().charAt(0);
 
 				if (ch == 'Y') {
 					patient.remove(ptRmove);
-				} else {
-					System.out.println("취소");
+					System.out.println("퇴원 처리를 완료하였습니다.");
+					patientList();
+					break;
+				}
+
+				if (ch == 'N') {
+					System.out.println("퇴원 처리 취소");
 					patientRemove();
+					break;
 				}
 
 				// 삭제할 인덱스 찾기
 
 			}
+			System.out.println("일치하는 환자가 없습니다. 다시입력해주세요");
+			patientRemove();
+			break;
+		}
+	}
+
+	public void doctorList() {
+		System.out.println();
+		System.out.println("   교수 명단 입니다.");
+
+		for (Doctor dt : doctor) {
+			System.out.println(dt);
+			System.out.println();
+		}
+	}
+
+	public void departmentList() {
+		System.out.println("교수조회 ");
+		Map<String, List<Doctor>> dtByDpt = new HashMap<String, List<Doctor>>();
+		// 과를 키로 지정 하고 해당 과를 가진 List를 value로 저장
+
+		for (Doctor dt : doctor) {
+
+			String dpt = dt.getDepartment(); // 과 얻어오기
+			dtByDpt.putIfAbsent(dpt, new ArrayList<Doctor>());
+			// putIfAbsent() :map에서 제공하는 메서드로
+			// 해당 키가 존재하지 않는 경우 전달받은 값을 추가
+			// -> Map에 해당 과의 리스트가 없는 경우에만 새로운 리스트를 생성하여 추가
+
+			dtByDpt.get(dpt).add(dt);
+			// dpt에 맞는 벨류값이 반환 -> List
+			// list.add(dt) ->전달된 dt 객체를 list에 추가
+
+		}
+		System.out.println();
+		
+		for (Entry<String, List<Doctor>> entry :dtByDpt.entrySet()) {
+			String department = entry.getKey(); //해당 enrty 의 과 를 얻어옴
+		
+			List<Doctor> doctors =entry.getValue();
+		System.out.println("[담당과  :"  + department+"]");
+		
+		for(Doctor departList :doctors) {
+			System.out.println(departList);
+		}
+		System.out.println();
+		
 		}
 	}
 }
